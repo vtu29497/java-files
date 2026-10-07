@@ -1,0 +1,55 @@
+import java.util.*;
+
+class Student {
+}
+
+class Rockstar {
+}
+
+class Hacker {
+}
+
+public class Solution {
+
+    static String count(ArrayList<Object> myList) {
+        int a = 0;
+        int b = 0;
+        int c = 0;
+
+        for (Object element : myList) {
+            if (element instanceof Student) {
+                a++;
+            } else if (element instanceof Rockstar) {
+                b++;
+            } else if (element instanceof Hacker) {
+                c++;
+            }
+        }
+
+        return a + " " + b + " " + c;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<Object> myList = new ArrayList<Object>();
+
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String s = sc.next();
+
+            if (s.equals("Student")) {
+                myList.add(new Student());
+            } else if (s.equals("Rockstar")) {
+                myList.add(new Rockstar());
+            } else if (s.equals("Hacker")) {
+                myList.add(new Hacker());
+            }
+        }
+
+        System.out.println(count(myList));
+
+        sc.close();
+    }
+}

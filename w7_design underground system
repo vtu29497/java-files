@@ -1,0 +1,52 @@
+import java.util.*;
+
+class UndergroundSystem {
+    private Map<Integer, CheckInInfo> checkIns
+    private Map<String, RouteInfo> routes;
+
+    public UndergroundSystem() {
+        checkIns = new HashMap<>();
+        routes = new HashMap<>();
+    }
+
+    public void checkIn(int id, String stationName, int t) {
+        checkIns.put(id, new CheckInInfo(stationName, t));
+    }
+
+    public void checkOut(int id, String stationName, int t) {
+        CheckInInfo info = checkIns.get(id);
+
+        String route = info.stationName + "#" + stationName;
+        int travelTime = t - info.time;
+
+        if (!routes.containsKey(route)) {
+            routes.put(route, new RouteInfo());
+        }
+
+        RouteInfo routeInfo = routes.get(route);
+        routeInfo.totalTime += travelTime;
+        routeInfo.count++;
+        checkIns.remove(id);
+    }
+
+    public double getAverageTime(String startStation, String endStation) {
+        String route = startStation + "#" + endStation;
+
+        RouteInfo routeInfo = routes.get(route);
+
+        return (double) routeInfo.totalTime / routeInfo.count;
+    }
+    static class CheckInInfo {
+        String stationName;
+        int time;
+
+        CheckInInfo(String stationName, int time) {
+            this.stationName = stationName;
+            this.time = time;
+        }
+    }
+    static class RouteInfo {
+        int totalTime = 0;
+        int count = 0;
+    }
+}
